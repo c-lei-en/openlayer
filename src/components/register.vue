@@ -160,6 +160,13 @@ export default {
 };
 </script>
 <style lang="less">
+body{
+  background-image: url("../assets/timg.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
   .demo-ruleForm{
     text-align: center;
     position: absolute;
