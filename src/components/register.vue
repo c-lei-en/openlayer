@@ -7,18 +7,17 @@
     label-width="100px"
     class="demo-ruleForm"
   >
-    <el-form-item label="用户名" prop="user">
+    <el-form-item>
       <el-input v-model="ruleForm.user" placeholder="请输入用户名"></el-input>
     </el-form-item>
-    <el-form-item label="确认密码" prop="checkPass">
+    <el-form-item>
       <el-input type="password" v-model="ruleForm.checkPass" placeholder="请输入密码"></el-input>
     </el-form-item>
-    <el-form-item label="验证码" prop="input">
-      <el-input v-model="input" placeholder="请输入验证码" @keydown.enter.native="submitForm('ruleForm')"></el-input>
-      <el-button @click="handleCode">{{vcode}}</el-button>
+    <el-form-item>
+      <el-input v-model="input" style="width:70%" placeholder="请输入验证码" @keydown.enter.native="submitForm('ruleForm')"></el-input><el-button style="width:30%" @click="handleCode">{{vcode}}</el-button>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+      <el-button type="primary" style="width:100%" @click="submitForm('ruleForm')">提交</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -73,9 +72,9 @@ export default {
           if (valid) {
             this.$axios
               .get(
-                "http://192.168.31.239:10/api/services/app/Test/GetMountainByName?Name=" +
+                "http://47.98.245.7:9999/api/services/app/Register/GetUserByName?Name=" +
                   this.ruleForm.user +
-                  "&Information=" +
+                  "&Password=" +
                   this.ruleForm.checkPass
               )
               .then(value => {
@@ -160,3 +159,13 @@ export default {
   }
 };
 </script>
+<style lang="less">
+  .demo-ruleForm{
+    text-align: center;
+    position: absolute;
+    margin: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+  }
+</style>
