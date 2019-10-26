@@ -1,7 +1,10 @@
 import TileLayer from "ol/layer/Tile"
 import TileArcGISRest from 'ol/source/TileArcGISRest'
 import OSM from 'ol/source/OSM'
-import XYZ from 'ol/source/XYZ'
+import vectorTile from "ol/layer/VectorTile"
+import vectorSource from "ol/source/VectorTile"
+import format from "ol/format/GeoJSON"
+
 
 let maptype = 0;
 

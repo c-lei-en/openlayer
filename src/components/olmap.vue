@@ -10,7 +10,7 @@ import menus from "./menu.vue";
 import "ol/ol.css";
 import { Map, View } from "ol";
 import mapconfig from "../config/mapconfig";
-import mycharts from "../config/mycharts";
+import mycharts from "../config/hanCharts";
 import ADLayer from "openlayers_echart";
 import echarts from "echarts";
 export default {
