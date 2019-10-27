@@ -13,7 +13,7 @@
         <br />
         <el-button type="primary" size="medium" style="width : 100%; text-align : center" @click="test('M')" plain>明</el-button>
         <br />
-        <el-button type="primary" size="medium" style="width : 100%; text-align : center" @click="test('QING')" plain>清</el-button>
+        <el-button type="primary" size="medium" style="width : 100%; text-align : center" @click="test('Q')" plain>清</el-button>
         <el-drawer :append-to-body="true"></el-drawer>
       <!-- </div> -->
     </el-drawer>

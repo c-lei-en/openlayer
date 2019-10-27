@@ -10,7 +10,12 @@ import menus from "./menu.vue";
 import "ol/ol.css";
 import { Map, View } from "ol";
 import mapconfig from "../config/mapconfig";
-import mycharts from "../config/hanCharts";
+import hancharts from "../config/hanCharts";
+import tangcharts from "../config/tangCharts";
+import songcharts from "../config/songCharts";
+import yuancharts from "../config/yuanCharts";
+import mingcharts from "../config/mingCharts";
+import qingcharts from "../config/qingCharts";
 import ADLayer from "openlayers_echart";
 import echarts from "echarts";
 export default {
@@ -37,12 +42,48 @@ export default {
   },
   methods: {
     echeck: function(value) {
-      if (value === "Q") {
-        this.oe = new ADLayer(mycharts.option, this.map, echarts);
+      if (value === "H") {
+        try {
+        this.oe.clear();
+        } catch (error) {}
+        this.oe = new ADLayer(hancharts.option, this.map, echarts);
         this.oe.render();
         this.map.render();
-      } else if (value === "H") {
-        // oe.clear();
+      } else if (value === "T") {
+        try {
+        this.oe.clear();
+        } catch (error) {}
+        this.oe = new ADLayer(tangcharts.option, this.map, echarts);
+        this.oe.render();
+        this.map.render();
+      }else if (value === "S") {
+        try {
+        this.oe.clear();
+        } catch (error) {}
+        this.oe = new ADLayer(songcharts.option, this.map, echarts);
+        this.oe.render();
+        this.map.render();
+      }else if (value === "Y") {
+        try {
+        this.oe.clear();
+        } catch (error) {}
+        this.oe = new ADLayer(yuancharts.option, this.map, echarts);
+        this.oe.render();
+        this.map.render();
+      }else if (value === "M") {
+        try {
+        this.oe.clear();
+        } catch (error) {}
+        this.oe = new ADLayer(mingcharts.option, this.map, echarts);
+        this.oe.render();
+        this.map.render();
+      }else if (value === "Q") {
+        try {
+        this.oe.clear();
+        } catch (error) {}
+        this.oe = new ADLayer(qingcharts.option, this.map, echarts);
+        this.oe.render();
+        this.map.render();
       }
     }
   }
