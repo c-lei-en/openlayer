@@ -9,14 +9,19 @@
 import menus from "./menu.vue";
 import "ol/ol.css";
 import { Map, View } from "ol";
-import mapconfig from "../config/mapconfig";
+import vectorSource from "ol/source/Vector";
+import vectorLayer from "ol/layer/Vector";
+import Feature from "ol/Feature";
+import Point from "ol/geom/Point";
+import { fromLonLat } from "ol/proj";
+import{mapconfig,createStyle} from "../config/mapconfig";
 import hancharts from "../config/hanCharts";
 import tangcharts from "../config/tangCharts";
 import songcharts from "../config/songCharts";
 import yuancharts from "../config/yuanCharts";
 import mingcharts from "../config/mingCharts";
 import qingcharts from "../config/qingCharts";
-import {GetMountain, GetDaoguan} from '@/api/request';
+import { GetMountain, GetDaoguan } from "@/api/request";
 import ADLayer from "openlayers_echart";
 import echarts from "echarts";
 export default {
@@ -26,7 +31,8 @@ export default {
   data() {
     return {
       oe: null,
-      map: null
+      map: null,
+      layerArr: []
     };
   },
   mounted() {
@@ -40,8 +46,33 @@ export default {
         zoom: mapconfig.zoom
       })
     });
-    const dat = GetMountain();
-    
+    let layerArr = this.layerArr;
+    let map = this.map;
+    const dat = GetMountain().then(function(respose) {
+      respose.data.features.forEach(function(el){
+
+        var name = el.attributes.Name;
+        var lon = el.geometry.x;
+        var lat = el.geometry.y;
+
+        var point = new Feature({
+          geometry: new Point(new fromLonLat([lon, lat], "EPSG:4326")),
+          name: name
+        });
+        point.setStyle(createStyle(point));
+        layerArr.push(point);
+      });
+      var vectorsource = new vectorSource({
+        features: layerArr
+      });
+
+      var vectorlayer = new vectorLayer({
+        source: vectorsource
+      });
+
+      map.addLayer(vectorlayer)
+
+    });
   },
   methods: {
     echeck: function(value) {
