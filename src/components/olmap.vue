@@ -32,54 +32,58 @@ export default {
     var mapcontainer = this.$refs.rootmap;
     this.map = new Map({
       target: mapcontainer,
-      layers: mapconfig.streetmap(),
       view: new View({
-        projection: "EPSG:4326",
         center: [mapconfig.x, mapconfig.y],
-        zoom: mapconfig.zoom
-      })
+        minZoom: 0,
+        maxZoom: 15,
+        zoom: 5,
+        projection: 'EPSG:4326',
+        wrapX: false
+      }),
+      layers: [mapconfig.streetmap]
     });
+    this.map.addLayer(mapconfig.daoguanLayer);
   },
   methods: {
     echeck: function(value) {
       if (value === "H") {
         try {
-        this.oe.clear();
+          this.oe.clear();
         } catch (error) {}
         this.oe = new ADLayer(hancharts.option, this.map, echarts);
         this.oe.render();
         this.map.render();
       } else if (value === "T") {
         try {
-        this.oe.clear();
+          this.oe.clear();
         } catch (error) {}
         this.oe = new ADLayer(tangcharts.option, this.map, echarts);
         this.oe.render();
         this.map.render();
-      }else if (value === "S") {
+      } else if (value === "S") {
         try {
-        this.oe.clear();
+          this.oe.clear();
         } catch (error) {}
         this.oe = new ADLayer(songcharts.option, this.map, echarts);
         this.oe.render();
         this.map.render();
-      }else if (value === "Y") {
+      } else if (value === "Y") {
         try {
-        this.oe.clear();
+          this.oe.clear();
         } catch (error) {}
         this.oe = new ADLayer(yuancharts.option, this.map, echarts);
         this.oe.render();
         this.map.render();
-      }else if (value === "M") {
+      } else if (value === "M") {
         try {
-        this.oe.clear();
+          this.oe.clear();
         } catch (error) {}
         this.oe = new ADLayer(mingcharts.option, this.map, echarts);
         this.oe.render();
         this.map.render();
-      }else if (value === "Q") {
+      } else if (value === "Q") {
         try {
-        this.oe.clear();
+          this.oe.clear();
         } catch (error) {}
         this.oe = new ADLayer(qingcharts.option, this.map, echarts);
         this.oe.render();
