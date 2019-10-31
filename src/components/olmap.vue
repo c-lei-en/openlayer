@@ -16,6 +16,7 @@ import songcharts from "../config/songCharts";
 import yuancharts from "../config/yuanCharts";
 import mingcharts from "../config/mingCharts";
 import qingcharts from "../config/qingCharts";
+import {GetMountain, GetDaoguan} from '@/api/request';
 import ADLayer from "openlayers_echart";
 import echarts from "echarts";
 export default {
@@ -39,47 +40,49 @@ export default {
         zoom: mapconfig.zoom
       })
     });
+    const dat = GetMountain();
+    
   },
   methods: {
     echeck: function(value) {
       if (value === "H") {
         try {
-        this.oe.clear();
+          this.oe.clear();
         } catch (error) {}
         this.oe = new ADLayer(hancharts.option, this.map, echarts);
         this.oe.render();
         this.map.render();
       } else if (value === "T") {
         try {
-        this.oe.clear();
+          this.oe.clear();
         } catch (error) {}
         this.oe = new ADLayer(tangcharts.option, this.map, echarts);
         this.oe.render();
         this.map.render();
-      }else if (value === "S") {
+      } else if (value === "S") {
         try {
-        this.oe.clear();
+          this.oe.clear();
         } catch (error) {}
         this.oe = new ADLayer(songcharts.option, this.map, echarts);
         this.oe.render();
         this.map.render();
-      }else if (value === "Y") {
+      } else if (value === "Y") {
         try {
-        this.oe.clear();
+          this.oe.clear();
         } catch (error) {}
         this.oe = new ADLayer(yuancharts.option, this.map, echarts);
         this.oe.render();
         this.map.render();
-      }else if (value === "M") {
+      } else if (value === "M") {
         try {
-        this.oe.clear();
+          this.oe.clear();
         } catch (error) {}
         this.oe = new ADLayer(mingcharts.option, this.map, echarts);
         this.oe.render();
         this.map.render();
-      }else if (value === "Q") {
+      } else if (value === "Q") {
         try {
-        this.oe.clear();
+          this.oe.clear();
         } catch (error) {}
         this.oe = new ADLayer(qingcharts.option, this.map, echarts);
         this.oe.render();
