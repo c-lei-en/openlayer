@@ -14,7 +14,7 @@ import vectorLayer from "ol/layer/Vector";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
 import { fromLonLat } from "ol/proj";
-import{mapconfig,createStyle} from "../config/mapconfig";
+import { mapconfig, createStyle } from "../config/mapconfig";
 import hancharts from "../config/hanCharts";
 import tangcharts from "../config/tangCharts";
 import songcharts from "../config/songCharts";
@@ -32,7 +32,10 @@ export default {
     return {
       oe: null,
       map: null,
-      layerArr: []
+      mountainArr: [],
+      daoguanArr: [],
+      mountainlayer: "",
+      daoguanlayer: ""
     };
   },
   mounted() {
@@ -44,16 +47,19 @@ export default {
         minZoom: 0,
         maxZoom: 15,
         zoom: 5,
-        projection: 'EPSG:4326',
+        projection: "EPSG:4326",
         wrapX: false
       }),
       layers: [mapconfig.streetmap]
     });
-    let layerArr = this.layerArr;
-    let map = this.map;
-    const dat = GetMountain().then(function(respose) {
-      respose.data.features.forEach(function(el){
 
+    let mountainArr = this.mountainArr;
+    let daoguanArr = this.daoguanArr;
+    let map = this.map;
+    let mountainlayer = this.mountainlayer;
+    let daoguanlayer = this.daoguanlayer;
+    GetMountain().then(function(respose) {
+      respose.data.features.forEach(el => {
         var name = el.attributes.Name;
         var lon = el.geometry.x;
         var lat = el.geometry.y;
@@ -63,18 +69,45 @@ export default {
           name: name
         });
         point.setStyle(createStyle(point));
-        layerArr.push(point);
+        mountainArr.push(point);
       });
-      var vectorsource = new vectorSource({
-        features: layerArr
-      });
-
-      var vectorlayer = new vectorLayer({
-        source: vectorsource
+      var mountainSource = new vectorSource({
+        features: mountainArr
       });
 
-      map.addLayer(vectorlayer)
+      mountainlayer = new vectorLayer({
+        source: mountainSource
+      });
 
+      map.addLayer(mountainlayer);
+    });
+
+    GetDaoguan().then(function(respose) {
+      respose.data.features.forEach(el => {
+
+        var name = el.attributes.name;
+        var lon = el.geometry.x;
+        var lat = el.geometry.y;
+
+        var point = new Feature({
+          geometry: new Point(new fromLonLat([lon, lat]), "EPSG:4326"),
+          name: name
+        });
+        
+        point.setStyle(createStyle(point));
+
+        daoguanArr.push(point);
+      });
+      var daoguanSource = new vectorSource({
+        features: daoguanArr
+      });
+
+      daoguanlayer = new vectorLayer({
+        source: daoguanSource
+      });
+
+      map.addLayer(daoguanlayer);
+      
     });
   },
   methods: {
