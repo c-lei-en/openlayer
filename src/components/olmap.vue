@@ -90,7 +90,7 @@ export default {
         var lat = el.geometry.y;
 
         var point = new Feature({
-          geometry: new Point(new fromLonLat([lon, lat]), "EPSG:4326"),
+          geometry: new Point(new fromLonLat([lon, lat], "EPSG:4326")),
           name: name
         });
         
