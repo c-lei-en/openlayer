@@ -196,4 +196,11 @@ export default {
   right: 10px;
   z-index: 50;
 }
+#ifm{
+  position: fixed;
+  top: 100px;
+  right: 100px;
+  height: 50%;
+  z-index: 100;
+}
 </style>
