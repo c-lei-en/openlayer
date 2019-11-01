@@ -15,11 +15,11 @@ export var mapconfig = {
     zoom: 3,
     streetmap: streetmap
 };
-export function createStyle(feature) {
+export function createStyle(feature, src) {
     return new Style({
         image: new Icon({
             scale: 0.01,
-            src: "http://47.98.245.7:2019/point.png"
+            src: src
         }),
 
         text: new Text({

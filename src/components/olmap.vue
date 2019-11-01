@@ -14,6 +14,8 @@ import vectorLayer from "ol/layer/Vector";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
 import { fromLonLat } from "ol/proj";
+import { click } from "ol/events/condition";
+import Select from "ol/interaction/Select";
 import { mapconfig, createStyle } from "../config/mapconfig";
 import hancharts from "../config/hanCharts";
 import tangcharts from "../config/tangCharts";
@@ -35,7 +37,10 @@ export default {
       mountainArr: [],
       daoguanArr: [],
       mountainlayer: "",
-      daoguanlayer: ""
+      daoguanlayer: "",
+      select: null,
+      selectClick: "",
+      featureName: ""
     };
   },
   mounted() {
@@ -68,7 +73,7 @@ export default {
           geometry: new Point(new fromLonLat([lon, lat], "EPSG:4326")),
           name: name
         });
-        point.setStyle(createStyle(point));
+        point.setStyle(createStyle(point, "http://47.98.245.7:2019/point.png"));
         mountainArr.push(point);
       });
       var mountainSource = new vectorSource({
@@ -84,7 +89,6 @@ export default {
 
     GetDaoguan().then(function(respose) {
       respose.data.features.forEach(el => {
-
         var name = el.attributes.name;
         var lon = el.geometry.x;
         var lat = el.geometry.y;
@@ -93,8 +97,8 @@ export default {
           geometry: new Point(new fromLonLat([lon, lat], "EPSG:4326")),
           name: name
         });
-        
-        point.setStyle(createStyle(point));
+
+        point.setStyle(createStyle(point, "http://47.98.245.7:2019/point.png"));
 
         daoguanArr.push(point);
       });
@@ -107,8 +111,15 @@ export default {
       });
 
       map.addLayer(daoguanlayer);
-      
     });
+
+    this.selectClick = new Select({
+      condition: click,
+      style: function(feature) {
+        return createStyle(feature, "http://47.98.245.7:2019/point.png");
+      }
+    });
+    this.selectFeatures();
   },
   methods: {
     echeck: function(value) {
@@ -155,6 +166,19 @@ export default {
         this.oe.render();
         this.map.render();
       }
+    },
+    /**
+     * 进行要素图层的选择
+     * 将所选要素的name获取并且返回到featureName
+     */
+    selectFeatures: function() {
+      this.select = this.selectClick;
+      this.map.addInteraction(this.select);
+      this.select.on("select", function(e) {
+        if (e.target.getFeatures().array_.length > 0) {
+          this.featureName = e.target.getFeatures().array_[0].values_.name;
+        }
+      });
     }
   }
 };
