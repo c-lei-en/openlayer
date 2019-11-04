@@ -1,7 +1,7 @@
 <template>
   <div class="d">
     <menus id="menus" @test="echeck"></menus>
-    <ifm id="ifmItem" :openOrClose="openOrClose" :featureName="featureName"></ifm>
+    <ifm id="ifmItem" :openOrClose='openOrClose' :featureName='featureName' :apiName='apiName'></ifm>
     <div id="map" ref="rootmap"></div>
   </div>
 </template>
@@ -40,12 +40,13 @@ export default {
       map: null,
       mountainArr: [],
       daoguanArr: [],
-      mountainlayer: "",
-      daoguanlayer: "",
-      overLay: "",
+      mountainlayer: '',
+      daoguanlayer: '',
+      overLay: '',
       select: null,
-      selectClick: "",
-      featureName: "",
+      selectClick: '',
+      apiName: '',
+      featureName: '',
       openOrClose: false
     };
   },
@@ -97,7 +98,7 @@ export default {
 
       mountainlayer = new vectorLayer({
         source: mountainSource,
-        index: 1
+        name: 'mountain'
       });
 
       map.addLayer(mountainlayer);
@@ -124,7 +125,7 @@ export default {
 
       daoguanlayer = new vectorLayer({
         source: daoguanSource,
-        index: 2
+        name: 'daoguan'
       });
 
       map.addLayer(daoguanlayer);
@@ -186,14 +187,14 @@ export default {
     },
     getLayer: function(feature, map) {
       var layers = map.getLayers();
-      for (var i = 0; i < layers.length; i++) {
-        var source = layers[i].getSource();
+      for (var i = 0; i < layers.array_.length; i++) {
+        var source = layers.array_[i].getSource();
         if (source instanceof vectorSource) {
           var features = source.getFeatures();
           if (features.length > 0) {
             for (var j = 0; j < features.length; j++) {
               if (features[j] === feature) {
-                return layers[i];
+                return layers.array_[i].values_.name;
               }
             }
           }
@@ -210,7 +211,7 @@ export default {
       this.map.addInteraction(this.select);
       this.select.on("select", e => {
         if (e.target.getFeatures().array_.length > 0) {
-          console.log(this.getLayer(e.target.getFeatures(),this.map));
+          this.apiName = this.getLayer(e.target.getFeatures().array_[0],this.map);
 
           let coordinate = [
             e.mapBrowserEvent.coordinate[0],

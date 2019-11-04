@@ -1,17 +1,8 @@
 import axios from 'axios';
 import Vue from 'vue';
-let mes = window.location;
-let _baseurl = `//${mes.hostname}:${mes.port}`;
 
-axios.defaults.baseURL = '/url';
+axios.defaults.baseURL = '/api';
 Vue.config.productionTip = false;
-Vue.config.devlopmentTip = false;
-
-export const GetUser = (name, password) => {
-    return axios.get(`/api/services/app/Register/GetUserByName?Name=${name}&Password=${password}`)
-}
-
-
 
 export function GetUser(user, password){
     return axios.get(`/api/services/app/Register/GetUserByName?Name=${user}&Password=${password}`)
