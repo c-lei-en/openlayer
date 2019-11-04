@@ -1,14 +1,17 @@
 <template>
   <div class="d">
     <menus id="menus" @test="echeck"></menus>
+    <ifm id="ifmItem" :openOrClose="openOrClose" :featureName="featureName"></ifm>
     <div id="map" ref="rootmap"></div>
   </div>
 </template>
 
 <script>
 import menus from "./menu.vue";
+import ifm from "./ifm.vue";
 import "ol/ol.css";
 import { Map, View } from "ol";
+import Overlay from "ol/Overlay";
 import vectorSource from "ol/source/Vector";
 import vectorLayer from "ol/layer/Vector";
 import Feature from "ol/Feature";
@@ -28,7 +31,8 @@ import ADLayer from "openlayers_echart";
 import echarts from "echarts";
 export default {
   components: {
-    menus
+    menus,
+    ifm
   },
   data() {
     return {
@@ -38,13 +42,23 @@ export default {
       daoguanArr: [],
       mountainlayer: "",
       daoguanlayer: "",
+      overLay: "",
       select: null,
       selectClick: "",
-      featureName: ""
+      featureName: "",
+      openOrClose: false
     };
   },
   mounted() {
     var mapcontainer = this.$refs.rootmap;
+    this.overLay = new Overlay({
+      element: document.getElementById("ifmItem"),
+      autoPan: true,
+      autoPanAnimation: {
+        duration: 200
+      }
+    });
+    let overLay = this.overLay;
     this.map = new Map({
       target: mapcontainer,
       view: new View({
@@ -55,7 +69,8 @@ export default {
         projection: "EPSG:4326",
         wrapX: false
       }),
-      layers: [mapconfig.streetmap]
+      layers: [mapconfig.streetmap],
+      overlays: [overLay]
     });
 
     let mountainArr = this.mountainArr;
@@ -81,7 +96,8 @@ export default {
       });
 
       mountainlayer = new vectorLayer({
-        source: mountainSource
+        source: mountainSource,
+        index: 1
       });
 
       map.addLayer(mountainlayer);
@@ -107,7 +123,8 @@ export default {
       });
 
       daoguanlayer = new vectorLayer({
-        source: daoguanSource
+        source: daoguanSource,
+        index: 2
       });
 
       map.addLayer(daoguanlayer);
@@ -167,6 +184,23 @@ export default {
         this.map.render();
       }
     },
+    getLayer: function(feature, map) {
+      var layers = map.getLayers();
+      for (var i = 0; i < layers.length; i++) {
+        var source = layers[i].getSource();
+        if (source instanceof vectorSource) {
+          var features = source.getFeatures();
+          if (features.length > 0) {
+            for (var j = 0; j < features.length; j++) {
+              if (features[j] === feature) {
+                return layers[i];
+              }
+            }
+          }
+        }
+      }
+      return null;
+    },
     /**
      * 进行要素图层的选择
      * 将所选要素的name获取并且返回到featureName
@@ -174,9 +208,17 @@ export default {
     selectFeatures: function() {
       this.select = this.selectClick;
       this.map.addInteraction(this.select);
-      this.select.on("select", function(e) {
+      this.select.on("select", e => {
         if (e.target.getFeatures().array_.length > 0) {
+          console.log(this.getLayer(e.target.getFeatures(),this.map));
+
+          let coordinate = [
+            e.mapBrowserEvent.coordinate[0],
+            e.mapBrowserEvent.coordinate[1]
+          ];
+          this.overLay.setPosition(coordinate);
           this.featureName = e.target.getFeatures().array_[0].values_.name;
+          this.openOrClose = true;
         }
       });
     }
@@ -196,7 +238,7 @@ export default {
   right: 10px;
   z-index: 50;
 }
-#ifm{
+#ifm {
   position: fixed;
   top: 100px;
   right: 100px;
