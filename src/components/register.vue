@@ -27,7 +27,7 @@
   </el-form>
 </template>
 <script>
-import { GetUser } from "@/api/request";
+import {GetUser} from "@/api/request";
 export default {
   data() {
     var checkVcode = (rule, value, callback) => {

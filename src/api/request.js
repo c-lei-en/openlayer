@@ -1,5 +1,7 @@
 import axios from 'axios';
 import Vue from 'vue';
+let mes = window.location;
+let _baseurl = `//${mes.hostname}:${mes.port}`;
 
 axios.defaults.baseURL = '/url';
 Vue.config.productionTip = false;
@@ -9,22 +11,28 @@ export const GetUser = (name, password) => {
     return axios.get(`/api/services/app/Register/GetUserByName?Name=${name}&Password=${password}`)
 }
 
-export const GetMountain = () => {
-    return axios.get(`/mountain.json`)
+
+
+export function GetUser(user, password){
+    return axios.get(`/api/services/app/Register/GetUserByName?Name=${user}&Password=${password}`)
 }
 
-export const GetDaoguan = () => {
-    return axios.get(`/daoguan.json`)
+export function GetDynasty(dnt){
+    return axios.get(`/api/services/app/Dynasty/GetDynastyByDnt?Dnt=${dnt}`)
 }
 
-export const GetMountainIfm = (name) => {
-    return axios.get(`/app/Mountain/GetMountainByName?Name=${name}`)
+export function GetMountainifm(name){
+    return axios.get(`/api/services/app/Mountain/GetMountainByName?Name=${name}`)
 }
 
-export const GetDaoguanIfm = (name) => {
-    return axios.get(`/api/services/app/Palace/GetPalaceByName?Name${name}`)
+export function GetPalace(name){
+    return axios.get(`/api/services/app/Palace/GetPalaceByName?Name=${name}`)
 }
 
-export const GetDynasty = (name) => {
-    return axios.get(`/api/services/app/Dynasty/GetDynastyByDnt?Dnt=${name}`)
+export function GetMountain() {
+    return axios.get( `http://47.98.245.7:9999/mountain.json`)
+}
+
+export function GetDaoguan() {
+    return axios.get(`http://47.98.245.7:9999/daoguan.json`)
 }
