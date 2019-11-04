@@ -14,7 +14,13 @@
       <el-input type="password" v-model="ruleForm.checkPass" placeholder="请输入密码"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-input v-model="input" style="width:70%" placeholder="请输入验证码" @keydown.enter.native="submitForm('ruleForm')"></el-input><el-button style="width:30%" @click="handleCode">{{vcode}}</el-button>
+      <el-input
+        v-model="input"
+        style="width:70%"
+        placeholder="请输入验证码"
+        @keydown.enter.native="submitForm('ruleForm')"
+      ></el-input>
+      <el-button style="width:30%" @click="handleCode">{{vcode}}</el-button>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" style="width:100%" @click="submitForm('ruleForm')">提交</el-button>
@@ -22,6 +28,7 @@
   </el-form>
 </template>
 <script>
+import {GetUser} from "@/api/request";
 export default {
   data() {
     var checkVcode = (rule, value, callback) => {
@@ -70,28 +77,21 @@ export default {
       if (codestatus) {
         this.$refs[formName].validate(valid => {
           if (valid) {
-            this.$axios
-              .get(
-                "http://47.98.245.7:9999/api/services/app/Register/GetUserByName?Name=" +
-                  this.ruleForm.user +
-                  "&Password=" +
-                  this.ruleForm.checkPass
-              )
-              .then(value => {
-                if (value.data.result == true) {
-                  sessionStorage.setItem(
-                    "user",
-                    JSON.stringify(this.ruleForm.user)
-                  );
-                  sessionStorage.setItem(
-                    "password",
-                    JSON.stringify(this.ruleForm.checkPass)
-                  );
-                  this.$router.push({ path: "/map" });
-                } else {
-                  console.log("用户名或密码错误");
-                }
-              });
+            GetUser(this.ruleForm.user, this.ruleForm.checkPass).then(value => {
+              if (value.data.result == true) {
+                sessionStorage.setItem(
+                  "user",
+                  JSON.stringify(this.ruleForm.user)
+                );
+                sessionStorage.setItem(
+                  "password",
+                  JSON.stringify(this.ruleForm.checkPass)
+                );
+                this.$router.push({ path: "/map" });
+              } else {
+                console.log("用户名或密码错误");
+              }
+            });
           }
         });
       }
@@ -160,19 +160,19 @@ export default {
 };
 </script>
 <style lang="less">
-body{
+body {
   background-image: url("../assets/timg.jpg");
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
   background-size: cover;
 }
-  .demo-ruleForm{
-    text-align: center;
-    position: absolute;
-    margin: 0;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-  }
+.demo-ruleForm {
+  text-align: center;
+  position: absolute;
+  margin: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 </style>

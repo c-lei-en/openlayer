@@ -73,7 +73,7 @@ export default {
           geometry: new Point(new fromLonLat([lon, lat], "EPSG:4326")),
           name: name
         });
-        point.setStyle(createStyle(point, "http://47.98.245.7:2019/point.png"));
+        point.setStyle(createStyle(point, "http://47.98.245.7:9999/point.png"));
         mountainArr.push(point);
       });
       var mountainSource = new vectorSource({
@@ -98,7 +98,7 @@ export default {
           name: name
         });
 
-        point.setStyle(createStyle(point, "http://47.98.245.7:2019/point.png"));
+        point.setStyle(createStyle(point, "http://47.98.245.7:9999/point.png"));
 
         daoguanArr.push(point);
       });
@@ -116,7 +116,7 @@ export default {
     this.selectClick = new Select({
       condition: click,
       style: function(feature) {
-        return createStyle(feature, "http://47.98.245.7:2019/point.png");
+        return createStyle(feature, "http://47.98.245.7:9999/point.png");
       }
     });
     this.selectFeatures();
