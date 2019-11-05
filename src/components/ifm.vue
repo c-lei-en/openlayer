@@ -5,7 +5,7 @@
       <el-tab-pane label="图片" name="picture">
         <el-carousel :interval="5000" arrow="always">
           <el-carousel-item v-for="item in 3" :key="item">
-            <h3>{{ item }}</h3>
+            <img />
           </el-carousel-item>
         </el-carousel>
       </el-tab-pane>
