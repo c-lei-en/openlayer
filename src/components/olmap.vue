@@ -65,12 +65,12 @@ export default {
       view: new View({
         center: [mapconfig.x, mapconfig.y],
         minZoom: 0,
-        maxZoom: 15,
+        maxZoom: 21,
         zoom: 5,
         projection: "EPSG:4326",
-        wrapX: false
+        wrapX: true
       }),
-      layers: [mapconfig.streetmap],
+      layers: [mapconfig.hybridmap, mapconfig.textmap],
       overlays: [overLay]
     });
 
@@ -231,6 +231,7 @@ export default {
             e.mapBrowserEvent.coordinate[1]
           ];
           this.overLay.setPosition(coordinate);
+          this.overLay.setOffset([-200,-330]);
           this.featureName = e.target.getFeatures().array_[0].values_.name;
           this.openOrClose = true;
         }
