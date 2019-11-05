@@ -1,7 +1,7 @@
 <template>
   <div class="d">
     <menus id="menus" @test="echeck"></menus>
-    <ifm id="ifmItem" :openOrClose="openOrClose" :featureName="featureName" :apiName="apiName" @closeOverlay='CloseOverlay'></ifm>
+    <ifm id="ifmItem" :featureName="featureName" :apiName="apiName" @closeOverlay="CloseOverlay"></ifm>
     <div id="map" ref="rootmap"></div>
   </div>
 </template>
@@ -140,8 +140,10 @@ export default {
     this.selectFeatures();
   },
   methods: {
-    CloseOverlay: function(value){
+    CloseOverlay: function(value) {
       this.overLay.setPosition(value);
+      this.apiName = "";
+      this.featureName = "";
     },
     echeck: function(value) {
       if (value === "H") {
@@ -214,6 +216,9 @@ export default {
      * 将所选要素的name获取并且返回到featureName
      */
     selectFeatures: function() {
+      if (this.select !== null) {
+        this.map.removeInteraction(this.select);
+      }
       this.select = this.selectClick;
       this.map.addInteraction(this.select);
       this.select.on("select", e => {
@@ -222,18 +227,13 @@ export default {
             e.target.getFeatures().array_[0],
             this.map
           );
-          
-          if (this.apiName == null) {
-            this.overLay.setPosition(undefined);
-          }
           let coordinate = [
             e.mapBrowserEvent.coordinate[0],
             e.mapBrowserEvent.coordinate[1]
           ];
           this.overLay.setPosition(coordinate);
-          this.overLay.setOffset([-200,-330]);
+          this.overLay.setOffset([-200, -330]);
           this.featureName = e.target.getFeatures().array_[0].values_.name;
-          this.openOrClose = true;
         }
       });
     }

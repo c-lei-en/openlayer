@@ -1,5 +1,5 @@
 <template>
-  <div v-show="showOrDis">
+  <div>
     <el-tabs v-model="activeName" @tab-click="closeOverlay">
       <el-tab-pane label="基本信息" name="ifm">{{information}}</el-tab-pane>
       <el-tab-pane label="图片" name="picture">
@@ -29,7 +29,6 @@ export default {
       information: "",
       ifmName: "",
       pointName: "",
-      showOrDis: false,
       imgArr: []
     };
   },
@@ -40,9 +39,6 @@ export default {
     featureName: function(newVal) {
       this.pointName = newVal;
       this.getIfm();
-    },
-    openOrClose: function(newVal) {
-      this.showOrDis = newVal;
     }
   },
   methods: {
@@ -50,13 +46,14 @@ export default {
       if (this.ifmName == "mountain") {
         GetMountainifm(this.pointName).then(response => {
           this.information = response.data.result.information;
+          this.activeName = "ifm";
         });
       } else if (this.ifmName == "daoguan") {
         GetPalace(this.pointName).then(response => {
           this.information = response.data.result.information;
+          this.activeName = "ifm";
         });
       }
-      this.activeName = "ifm";
     },
     closeOverlay(tab) {
       if (tab.label == "关闭") {
