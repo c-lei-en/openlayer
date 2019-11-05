@@ -1,7 +1,7 @@
 <template>
   <div class="d">
     <menus id="menus" @test="echeck"></menus>
-    <ifm id="ifmItem" :openOrClose='openOrClose' :featureName='featureName' :apiName='apiName'></ifm>
+    <ifm id="ifmItem" :openOrClose="openOrClose" :featureName="featureName" :apiName="apiName" @closeOverlay='CloseOverlay'></ifm>
     <div id="map" ref="rootmap"></div>
   </div>
 </template>
@@ -40,13 +40,13 @@ export default {
       map: null,
       mountainArr: [],
       daoguanArr: [],
-      mountainlayer: '',
-      daoguanlayer: '',
-      overLay: '',
+      mountainlayer: "",
+      daoguanlayer: "",
+      overLay: "",
       select: null,
-      selectClick: '',
-      apiName: '',
-      featureName: '',
+      selectClick: "",
+      apiName: "",
+      featureName: "",
       openOrClose: false
     };
   },
@@ -98,7 +98,7 @@ export default {
 
       mountainlayer = new vectorLayer({
         source: mountainSource,
-        name: 'mountain'
+        name: "mountain"
       });
 
       map.addLayer(mountainlayer);
@@ -125,7 +125,7 @@ export default {
 
       daoguanlayer = new vectorLayer({
         source: daoguanSource,
-        name: 'daoguan'
+        name: "daoguan"
       });
 
       map.addLayer(daoguanlayer);
@@ -140,7 +140,10 @@ export default {
     this.selectFeatures();
   },
   methods: {
-   echeck: function(value) {
+    CloseOverlay: function(value){
+      this.overLay.setPosition(value);
+    },
+    echeck: function(value) {
       if (value === "H") {
         try {
           this.oe.clear();
@@ -183,12 +186,10 @@ export default {
         this.oe = new ADLayer(qingcharts.option, this.map, echarts);
         this.oe.render();
         this.map.render();
-      }
-      else if(value == 'C'){
-        try{
-        this.oe.clear();
-        }
-        catch(e){}
+      } else if (value == "C") {
+        try {
+          this.oe.clear();
+        } catch (e) {}
       }
     },
     getLayer: function(feature, map) {
@@ -217,8 +218,14 @@ export default {
       this.map.addInteraction(this.select);
       this.select.on("select", e => {
         if (e.target.getFeatures().array_.length > 0) {
-          this.apiName = this.getLayer(e.target.getFeatures().array_[0],this.map);
-
+          this.apiName = this.getLayer(
+            e.target.getFeatures().array_[0],
+            this.map
+          );
+          
+          if (this.apiName == null) {
+            this.overLay.setPosition(undefined);
+          }
           let coordinate = [
             e.mapBrowserEvent.coordinate[0],
             e.mapBrowserEvent.coordinate[1]
@@ -238,12 +245,18 @@ export default {
 }
 #map {
   height: 100%;
-  z-index: 1000
 }
 #menus {
   position: fixed;
   top: 10px;
   right: 10px;
   z-index: 1000;
+}
+.el-tabs {
+  background-color: #545c64;
+  height: 300px;
+  width: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 </style>

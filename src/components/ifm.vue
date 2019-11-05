@@ -1,9 +1,16 @@
 <template>
   <div v-show="showOrDis">
-    <el-tabs v-model="activeName" @tab-click="handleSelect">
+    <el-tabs v-model="activeName" @tab-click="closeOverlay">
       <el-tab-pane label="基本信息" name="ifm">{{information}}</el-tab-pane>
-      <el-tab-pane label="图片" name="picture">{{}}</el-tab-pane>
+      <el-tab-pane label="图片" name="picture">
+        <el-carousel :interval="5000" arrow="always">
+          <el-carousel-item v-for="item in 3" :key="item">
+            <h3>{{ item }}</h3>
+          </el-carousel-item>
+        </el-carousel>
+      </el-tab-pane>
       <el-tab-pane label="视频" name="vedio">{{}}</el-tab-pane>
+      <el-tab-pane label="关闭"></el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -36,10 +43,8 @@ export default {
     openOrClose: function(newVal) {
       this.showOrDis = newVal;
     }
-    
   },
   methods: {
-    handleSelect() {},
     getIfm() {
       if (this.ifmName == "mountain") {
         GetMountainifm(this.pointName).then(response => {
@@ -50,17 +55,13 @@ export default {
           this.information = response.data.result.information;
         });
       }
+      this.activeName = "ifm";
+    },
+    closeOverlay(tab) {
+      if (tab.label == "关闭") {
+        this.$emit("closeOverlay", undefined);
+      }
     }
   }
 };
 </script>
-
- <style lang="less" scope>
-.el-tabs {
-  background-color: #545c64;
-  height: 300px;
-  width: 400px;
-  overflow-y:auto;
-  overflow-x:hidden;
-}
-</style>
