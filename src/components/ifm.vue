@@ -29,7 +29,8 @@ export default {
       information: "",
       ifmName: "",
       pointName: "",
-      showOrDis: false
+      showOrDis: false,
+      imgArr: []
     };
   },
   watch: {
