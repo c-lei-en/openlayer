@@ -1,9 +1,9 @@
 <template>
   <div v-show="showOrDis">
     <el-tabs v-model="activeName" @tab-click="handleSelect">
-      <el-tab-pane label="基本信息" index="ifm">{{information}}</el-tab-pane>
-      <el-tab-pane label="图片" index="picture">{{}}</el-tab-pane>
-      <el-tab-pane label="视频" index="vedio">{{}}</el-tab-pane>
+      <el-tab-pane label="基本信息" name="ifm">{{information}}</el-tab-pane>
+      <el-tab-pane label="图片" name="picture">{{}}</el-tab-pane>
+      <el-tab-pane label="视频" name="vedio">{{}}</el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -58,5 +58,9 @@ export default {
  <style lang="less" scope>
 .el-tabs {
   background-color: #545c64;
+  height: 300px;
+  width: 400px;
+  overflow-y:auto;
+  overflow-x:hidden;
 }
 </style>

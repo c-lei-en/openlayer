@@ -28,6 +28,13 @@ export default {
       direction : 'rtl',
     };
   },
+  watch:{
+    drawer(newValue){
+      if(newValue == false){
+        this.$emit('test', 'C');
+      }
+    }
+  },
   methods: {
     test(params) {
       this.$emit('test', params)

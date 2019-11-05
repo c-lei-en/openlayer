@@ -184,7 +184,7 @@ var convertData = function (data) {
     return res;
 };
 
-var color = ['#a6c84c', '#ffa022', '#46bee9', '#97ee6b'];
+var color = ['#EE3A8C'];
 var series = [];
 [['北京', BJData]].forEach(function (item, i) {
     series.push({
@@ -196,7 +196,7 @@ var series = [];
             period: 6,
             trailLength: 0.7,
             //定以尾部特效
-            color: '#fff',
+            color: '##FFFF00',
             symbolSize: 4
         },
         //显示转换框中的颜色变化

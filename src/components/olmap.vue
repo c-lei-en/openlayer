@@ -27,7 +27,7 @@ import yuancharts from "../config/yuanCharts";
 import mingcharts from "../config/mingCharts";
 import qingcharts from "../config/qingCharts";
 import { GetMountain, GetDaoguan } from "@/api/request";
-import ADLayer from "openlayers_echart";
+import ADLayer from "@/config/openlayer_echarts";
 import echarts from "echarts";
 export default {
   components: {
@@ -140,7 +140,7 @@ export default {
     this.selectFeatures();
   },
   methods: {
-    echeck: function(value) {
+   echeck: function(value) {
       if (value === "H") {
         try {
           this.oe.clear();
@@ -183,6 +183,12 @@ export default {
         this.oe = new ADLayer(qingcharts.option, this.map, echarts);
         this.oe.render();
         this.map.render();
+      }
+      else if(value == 'C'){
+        try{
+        this.oe.clear();
+        }
+        catch(e){}
       }
     },
     getLayer: function(feature, map) {
@@ -232,18 +238,12 @@ export default {
 }
 #map {
   height: 100%;
+  z-index: 1000
 }
 #menus {
   position: fixed;
   top: 10px;
   right: 10px;
-  z-index: 50;
-}
-#ifm {
-  position: fixed;
-  top: 100px;
-  right: 100px;
-  height: 50%;
-  z-index: 100;
+  z-index: 1000;
 }
 </style>

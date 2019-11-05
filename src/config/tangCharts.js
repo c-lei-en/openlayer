@@ -177,7 +177,7 @@ var convertData = function (data) {
     return res;
 };
 
-var color = ['#a6c84c', '#ffa022', '#46bee9'];
+var color = ['#0000CD'];
 var series = [];
 [['西安', XAData]].forEach(function (item, i) {
     series.push({
@@ -189,7 +189,7 @@ var series = [];
             period: 6,
             trailLength: 0.7,
             //定以尾部特效
-            color: '#fff',
+            color: '#8B0000',
             symbolSize: 4
         },
         //显示转换框中的颜色变化

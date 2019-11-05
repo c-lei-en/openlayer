@@ -178,7 +178,7 @@ var convertData = function (data) {
     return res;
 };
 
-var color = ['#a6c84c', '#ffa022', '#46bee9', '#97ee6b'];
+var color = ['#46bee9'];
 var series = [];
 [['龙虎山', LHData]].forEach(function (item, i) {
     series.push({
@@ -190,7 +190,7 @@ var series = [];
             period: 6,
             trailLength: 0.7,
             //定以尾部特效
-            color: '#fff',
+            color: '#ffa022',
             symbolSize: 4
         },
         //显示转换框中的颜色变化
