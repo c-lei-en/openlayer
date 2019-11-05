@@ -45,13 +45,13 @@ export default {
     getIfm() {
       if (this.ifmName == "mountain") {
         GetMountainifm(this.pointName).then(response => {
-          this.information = response.data.result.information;
           this.activeName = "ifm";
+          this.information = response.data.result.information;
         });
       } else if (this.ifmName == "daoguan") {
         GetPalace(this.pointName).then(response => {
-          this.information = response.data.result.information;
           this.activeName = "ifm";
+          this.information = response.data.result.information;
         });
       }
     },

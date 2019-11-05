@@ -137,7 +137,9 @@ export default {
         return createStyle(feature, "http://47.98.245.7:9999/point.png");
       }
     });
-    this.selectFeatures();
+    this.map.on("click", e => {
+      this.selectFeatures();
+    });
   },
   methods: {
     CloseOverlay: function(value) {
@@ -218,6 +220,7 @@ export default {
     selectFeatures: function() {
       if (this.select !== null) {
         this.map.removeInteraction(this.select);
+        this.select.features_.array_ = [];
       }
       this.select = this.selectClick;
       this.map.addInteraction(this.select);
