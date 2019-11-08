@@ -38,7 +38,6 @@ export default {
     },
     featureName: function(newVal) {
       this.pointName = newVal;
-       this.activeName = "ifm";
       this.getIfm();
     }
   },
@@ -46,10 +45,12 @@ export default {
     async getIfm() {
       if (this.ifmName == "mountain") {
         await  GetMountainifm(this.pointName).then(response => {
+          this.activeName = "ifm";
           this.information = response.data.result.information;
         });
       } else if (this.ifmName == "daoguan") {
         await  GetPalace(this.pointName).then(response => {
+          this.activeName = "ifm";
           this.information = response.data.result.information;
         });
       }
