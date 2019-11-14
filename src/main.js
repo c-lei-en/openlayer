@@ -6,7 +6,12 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // import echarts from 'echarts'
+import '../node_modules/cesium/Build/Cesium/Widgets/widgets.css';
 
+
+var Cesium = require('../node_modules/cesium/Source/Cesium.js')
+
+Vue.prototype.Cesium = Cesium;
 
 
 // Vue.prototype.$echarts = echarts;

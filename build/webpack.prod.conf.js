@@ -11,6 +11,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
+const cesiumSource = 'node_modules/cesium/Source'
+
+const cesiumWorkers = '../Build/Cesium/Workers'
+
 const env = require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
@@ -106,7 +110,13 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+    new CopyWebpackPlugin([ { from: path.join(cesiumSource, cesiumWorkers), to: 'Workers'} ]),
+    new CopyWebpackPlugin([ { from: path.join(cesiumSource, 'Assets'), to: 'Assets'} ]),
+    new CopyWebpackPlugin([ { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets'} ]),
+    new webpack.DefinePlugin({
+      CESIUM_BASE_URL: JSON.stringify('./')
+    })
   ]
 })
 

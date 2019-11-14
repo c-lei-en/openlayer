@@ -9,7 +9,7 @@
           </el-carousel-item>
         </el-carousel>
       </el-tab-pane>
-      <el-tab-pane label="视频" name="vedio">{{}}</el-tab-pane>
+      <el-tab-pane label="三维" name="vedio"></el-tab-pane>
       <el-tab-pane label="关闭"></el-tab-pane>
     </el-tabs>
   </div>
@@ -21,7 +21,8 @@ export default {
   props: {
     openOrClose: Boolean,
     featureName: String,
-    apiName: String
+    apiName: String,
+    coordinate: Array
   },
   data() {
     return {
@@ -29,7 +30,8 @@ export default {
       information: "",
       ifmName: "",
       pointName: "",
-      imgArr: []
+      imgArr: [],
+      coordinateCesium: []
     };
   },
   watch: {
@@ -39,6 +41,9 @@ export default {
     featureName: function(newVal) {
       this.pointName = newVal;
       this.getIfm();
+    },
+    coordinate: function(newVal){
+      this.coordinateCesium = newVal;
     }
   },
   methods: {
@@ -58,6 +63,16 @@ export default {
     closeOverlay(tab) {
       if (tab.label == "关闭") {
         this.$emit("closeOverlay", undefined);
+      }
+      if(tab.label == "三维") {
+        this.$router.push({ 
+          name: "cesium",
+          params: {
+            queryName: this.pointName,
+            queryIfm: this.information,
+            coordinate: this.coordinateCesium
+          }
+        });
       }
     }
   }

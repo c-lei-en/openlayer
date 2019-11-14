@@ -1,7 +1,7 @@
 <template>
   <div class="d">
     <menus id="menus" @test="echeck"></menus>
-    <ifm id="ifmItem" :featureName="featureName" :apiName="apiName" @closeOverlay="CloseOverlay"></ifm>
+    <ifm id="ifmItem" :featureName="featureName" :coordinate="coordinateCesium" :apiName="apiName" @closeOverlay="CloseOverlay"></ifm>
     <div id="map" ref="rootmap"></div>
   </div>
 </template>
@@ -47,7 +47,8 @@ export default {
       selectClick: "",
       apiName: "",
       featureName: "",
-      openOrClose: false
+      openOrClose: false,
+      coordinateCesium: []
     };
   },
   mounted() {
@@ -73,7 +74,6 @@ export default {
       layers: [mapconfig.hybridmap, mapconfig.textmap],
       overlays: [overLay]
     });
-
     let mountainArr = this.mountainArr;
     let daoguanArr = this.daoguanArr;
     let map = this.map;
@@ -234,6 +234,7 @@ export default {
             e.mapBrowserEvent.coordinate[0],
             e.mapBrowserEvent.coordinate[1]
           ];
+          this.coordinateCesium = coordinate;
           this.overLay.setPosition(coordinate);
           this.overLay.setOffset([-200, -330]);
           this.featureName = e.target.getFeatures().array_[0].values_.name;
