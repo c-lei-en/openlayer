@@ -36,7 +36,7 @@ export default {
 			material: this.Cesium.Color.RED.withAlpha(0.5),
         }
     });
-    this.viewer.zoomTo(this.viewer.entities);
+    this.viewer.flyTo(this.viewer.entities);
     //创建一个点击事件
         var handler = new this.Cesium.ScreenSpaceEventHandler(this.viewer.scene.canvas);
 

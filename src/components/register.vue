@@ -22,7 +22,7 @@
       ></el-input><el-button style="width:30%" @click="handleCode">{{vcode}}</el-button>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" style="width:100%" @click="submitForm('ruleForm')">提交</el-button>
+      <el-button type="primary" style="width:100%" @click="submitForm('ruleForm')">登录</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -78,6 +78,10 @@ export default {
           if (valid) {
             GetUser(this.ruleForm.user, this.ruleForm.checkPass).then(value => {
               if (value.data.result == true) {
+                this.$message({
+                  message: '登陆成功',
+                  type: 'success'
+                })
                 sessionStorage.setItem(
                   "user",
                   JSON.stringify(this.ruleForm.user)
