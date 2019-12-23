@@ -1,7 +1,9 @@
 import axios from 'axios';
 import Vue from 'vue';
 
-axios.defaults.baseURL = '/api';
+// axios.defaults.baseURL = process.env.NODE_ENV == "developement" ? "http://47.98.245.7:9999" : '/api';
+axios.defaults.baseURL = "http://47.98.245.7:9999";
+
 Vue.config.productionTip = false;
 
 export function GetUser(user, password){
